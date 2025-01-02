@@ -5,13 +5,13 @@ const token = '7515370853:AAEikh7iTegPcr8vhxpYsBNNJOuB30M3oaQ';
 const webAppUrl = 'https://sunvillrest.netlify.app/';
 
 // Здесь ваш ngrok URL
-const ngrokUrl = 'https://8596-113-189-111-119.ngrok-free.app';  // Замените на свой ngrok URL
+const railwayUrl = 'https://railway.com/project/e3dd533e-1b6e-4b79-8b87-748274ca052c';  // Замените на свой ngrok URL
 
 // Создаем бота, но теперь без polling
 const bot = new TelegramBot(token, { webHook: true });
 
 // Устанавливаем вебхук на URL, который предоставляет ngrok
-const webhookUrl = `${ngrokUrl}/bot${token}`;
+const webhookUrl = `${railwayUrl}/bot${token}`;
 bot.setWebHook(webhookUrl);
 
 // Устанавливаем обработчик запросов от Telegram
