@@ -2,7 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express'); // Для использования вебхука с Express
 const app = express();
 const token = '7515370853:AAEikh7iTegPcr8vhxpYsBNNJOuB30M3oaQ';
-const webAppUrl = 'https://sunvillrest.netlify.app/';
+const webAppUrl = 'https://sunvillage-6aec8.web.app/';
 
 // Здесь ваш ngrok URL
 const railwayUrl = 'sunvillserver-production.up.railway.app';  // Замените на свой ngrok URL
