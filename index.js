@@ -51,7 +51,7 @@ app.post(`/bot${token}`, (req, res) => {
 });
 
 // Запуск сервера Express
-const port = process.env.PORT || 3000; // Используйте порт из переменной окружения или 3000 по умолчанию
+const port = process.env.PORT || 8080; // Используйте порт из переменной окружения или 8080 по умолчанию
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
