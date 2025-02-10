@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express'); // Для использования вебхука с Express
 const app = express();
-const token = '7515370853:AAEikh7iTegPcr8vhxpYsBNNJOuB30M3oaQ';
+const token = '8145533777:AAEqpp5WJah_m2PE3o8YCFI8fHjS5fZCEwc';
 const webAppUrl = 'https://sunvillage-6aec8.web.app/';
 
 // Здесь ваш ngrok URL
