@@ -1,58 +1,61 @@
 const TelegramBot = require('node-telegram-bot-api');
-const express = require('express'); // Для использования вебхука с Express
+const express = require('express');
+require('dotenv').config(); // Загружаем переменные окружения
+
 const app = express();
-const token = '8145533777:AAEqpp5WJah_m2PE3o8YCFI8fHjS5fZCEwc';
+
+const token = process.env.TELEGRAM_BOT_TOKEN; // Загружаем токен из .env
 const webAppUrl = 'https://sunvillage-6aec8.web.app/';
+const railwayUrl = process.env.RAILWAY_URL; // Загружаем Railway URL из .env
 
-// Здесь ваш ngrok URL
-const railwayUrl = 'sunvillserver-production.up.railway.app';  // Замените на свой ngrok URL
+// Проверяем, загружены ли переменные
+if (!token || !railwayUrl) {
+    console.error('Ошибка: Отсутствует TELEGRAM_BOT_TOKEN или RAILWAY_URL');
+    process.exit(1);
+}
 
-// Создаем бота, но теперь без polling
+// Создаем бота с вебхуком
 const bot = new TelegramBot(token, { webHook: true });
 
-// Устанавливаем вебхук на URL, который предоставляет ngrok
+// Устанавливаем вебхук
 const webhookUrl = `${railwayUrl}/bot${token}`;
 bot.setWebHook(webhookUrl);
 
-// Устанавливаем обработчик запросов от Telegram
 app.use(express.json());
 
 app.post(`/bot${token}`, (req, res) => {
-  const msg = req.body;
-  const chatId = msg.message.chat.id;
-  const text = msg.message.text;
+    const msg = req.body;
+    const chatId = msg.message.chat.id;
+    const text = msg.message.text;
 
-  if (text === '/start') {
-      try {
-          // Отправка Web App кнопки как inline-клавиатуры
-          bot.sendMessage(chatId, 'Открывайте приложение по кнопке снизу', {
-              reply_markup: {
-                  inline_keyboard: [
-                      [{ text: 'Открыть приложение', web_app: { url: `${webAppUrl}?chatId=${chatId}` } }]
-                  ]
-              }
-          });
+    if (text === '/start') {
+        try {
+            bot.sendMessage(chatId, 'Открывайте приложение по кнопке снизу', {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{ text: 'Открыть приложение', web_app: { url: `${webAppUrl}?chatId=${chatId}` } }]
+                    ]
+                }
+            });
 
-          // Отправка Web App кнопки возле поля ввода
-          bot.sendMessage(chatId, 'Используйте кнопку внизу для запуска приложения.', {
-              reply_markup: {
-                  keyboard: [
-                      [{ text: 'Открыть приложение', web_app: { url: `${webAppUrl}?chatId=${chatId}` } }]
-                  ],
-                  resize_keyboard: true
-              }
-          });
-      } catch (error) {
-          console.error(`Ошибка при отправке сообщения: ${error.message}`);
-      }
-  }
+            bot.sendMessage(chatId, 'Используйте кнопку внизу для запуска приложения.', {
+                reply_markup: {
+                    keyboard: [
+                        [{ text: 'Открыть приложение', web_app: { url: `${webAppUrl}?chatId=${chatId}` } }]
+                    ],
+                    resize_keyboard: true
+                }
+            });
+        } catch (error) {
+            console.error(`Ошибка при отправке сообщения: ${error.message}`);
+        }
+    }
 
-  res.send('OK'); // Ответ на запрос Telegram
+    res.send('OK');
 });
 
 // Запуск сервера Express
-const port = process.env.PORT || 8080; // Используйте порт из переменной окружения или 8080 по умолчанию
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });
-
