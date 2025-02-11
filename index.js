@@ -10,7 +10,7 @@ const railwayUrl = process.env.RAILWAY_URL; // Загружаем Railway URL и
 
 // Проверяем, загружены ли переменные
 if (!token || !railwayUrl) {
-    console.error('Ошибка: Отсутствует TELEGRAM_BOT_TOKEN или RAILWAY_URL');
+    console.error('Error: Отсутствует TELEGRAM_BOT_TOKEN или RAILWAY_URL');
     process.exit(1);
 }
 
