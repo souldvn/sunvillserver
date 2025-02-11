@@ -28,6 +28,8 @@ app.post(`/bot${token}`, (req, res) => {
     const chatId = msg.message.chat.id;
     const text = msg.message.text;
 
+    bot.sendMessage(chatId, `Ваш chat_id: ${chatId}`);
+
     if (text === '/start') {
         try {
             bot.sendMessage(chatId, 'Открывайте приложение по кнопке снизу', {
